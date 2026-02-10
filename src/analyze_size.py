@@ -7,14 +7,16 @@ Generates plots:
 
 import numpy as np
 import matplotlib.pyplot as plt
-from relaxation import neel_relaxation_time, brown_relaxation_time, effective_relaxation_time
-from config import parse_config_file, Constants
-from material import Material
-from particle import Particle
-from field import AlternatingField
-from simulation import Simulation
-from config import SimulationConfig
-from hyperthermia import calculate_SAR
+import numpy as np
+import matplotlib.pyplot as plt
+from .relaxation import neel_relaxation_time, brown_relaxation_time, effective_relaxation_time
+from .config import parse_config_file, SimulationConfig
+from hdr.constants import Constants
+from .material import Material
+from .particle import Particle
+from .field import AlternatingField
+from .simulation import Simulation
+from .hyperthermia import calculate_SAR
 
 def analyze_relaxation_vs_size():
     """Generate relaxation time vs particle size plot."""
@@ -153,7 +155,7 @@ def analyze_heating_vs_size():
     print("\nSaved: output/SAR_vs_size.png")
     plt.close()
 
-if __name__ == "__main__":
+def run():
     import os
     os.makedirs('output', exist_ok=True)
     
@@ -184,3 +186,6 @@ if __name__ == "__main__":
     print("\n" + "="*60)
     print("Analysis complete!")
     print("="*60)
+
+if __name__ == "__main__":
+    run()

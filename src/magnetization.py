@@ -1,5 +1,5 @@
 import numpy as np
-from config import Constants
+from hdr.constants import Constants
 
 def calculate_effective_field(
     t: float, 

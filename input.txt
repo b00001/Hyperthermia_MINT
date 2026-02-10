@@ -3,7 +3,7 @@ viscosity=0.00089   # Viscosity [Pa*s]
 dt=1e-10            # Time step [s]
 field_amplitude=25.13 # B0 [mT]
 field_frequency=300000 # f [Hz]
-cycles=3            # Number of cycles to simulate
+cycles=1            # Number of cycles to simulate
 max_steps=0         # Maximum number of steps (0 = auto from cycles) (100,000 steps for 3 cycles)
 save_output=True    # Whether to save output files
 output_dir=output   # Directory name for output

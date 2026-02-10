@@ -1,4 +1,3 @@
-import numpy as np
 import os
 
 def parse_config_file(filepath: str) -> dict:
@@ -9,8 +8,12 @@ def parse_config_file(filepath: str) -> dict:
     """
     config = {}
     if not os.path.exists(filepath):
-        print(f"Warning: Config file {filepath} not found.")
-        return config
+        # Try looking one directory up if in src
+        if os.path.exists(os.path.join("..", filepath)):
+             filepath = os.path.join("..", filepath)
+        else:
+            print(f"Warning: Config file {filepath} not found.")
+            return config
         
     with open(filepath, 'r') as f:
         for line in f:
@@ -44,11 +47,6 @@ def parse_config_file(filepath: str) -> dict:
                 config[key] = val
                 
     return config
-
-class Constants:
-    """Physical constants used in the simulation."""
-    mu0 = 4 * np.pi * 1e-7      # Vacuum permeability [T*m/A] (approx 1.2566e-6)
-    kB = 1.380649e-23           # Boltzmann constant [J/K]
 
 class SimulationConfig:
     """Default simulation parameters."""

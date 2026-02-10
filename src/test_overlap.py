@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from config import SimulationConfig
-from material import Material
-from particle import Particle
-from field import StaticField
-from simulation import Simulation
+from .config import SimulationConfig
+from .material import Material
+from .particle import Particle
+from .field import StaticField
+from .simulation import Simulation
 
 def test_overlap():
     # Setup: 2 particles very close to each other, attracted

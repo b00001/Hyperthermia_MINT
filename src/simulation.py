@@ -1,21 +1,22 @@
 import numpy as np
 from typing import List, Optional
 
-from config import SimulationConfig, Constants
-from material import Material
-from particle import Particle
-from field import Field, AlternatingField
-from dynamics import (
+from .config import SimulationConfig
+from hdr.constants import Constants
+from .material import Material
+from .particle import Particle
+from .field import Field, AlternatingField
+from .dynamics import (
     calculate_translational_gamma, 
     calculate_rotational_gamma, 
     calculate_translational_displacement, 
     calculate_rotational_update,
     calculate_steric_forces
 )
-from magnetization import calculate_effective_field, solve_llg_step
-from relaxation import neel_relaxation_time, brown_relaxation_time
-from dipole import calculate_dipole_field, calculate_dipole_force
-from hysteresis_loop import HysteresisLoop
+from .magnetization import calculate_effective_field, solve_llg_step
+from .relaxation import neel_relaxation_time, brown_relaxation_time
+from .dipole import calculate_dipole_field, calculate_dipole_force
+from .hysteresis_loop import HysteresisLoop
 
 class Simulation:
     def __init__(self, config: SimulationConfig, particles: List[Particle], field: Field, mode='auto'):

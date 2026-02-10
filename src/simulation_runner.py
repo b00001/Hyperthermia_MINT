@@ -1,10 +1,11 @@
-from config import SimulationConfig, parse_config_file, Constants
-from material import Material
-from particle import Particle
-from field import AlternatingField
-from simulation import Simulation
-from hyperthermia import calculate_SAR
-from visualization import plot_hysteresis, plot_time_series, animate_system
+from .config import SimulationConfig, parse_config_file
+from hdr.constants import Constants
+from .material import Material
+from .particle import Particle
+from .field import AlternatingField
+from .simulation import Simulation
+from .hyperthermia import calculate_SAR
+from .visualization import plot_hysteresis, plot_time_series, animate_system
 import os
 
 import numpy as np

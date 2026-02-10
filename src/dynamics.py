@@ -1,5 +1,5 @@
 import numpy as np
-from config import Constants
+from hdr.constants import Constants
 
 def llg_equation(m_dir: np.ndarray, H_eff: np.ndarray, gamma: float, alpha: float) -> np.ndarray:
     """

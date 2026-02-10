@@ -1,5 +1,5 @@
 import numpy as np
-from material import Material
+from .material import Material
 
 class Particle:
     """

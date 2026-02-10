@@ -4,8 +4,8 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 from typing import List, Optional
 
-from hysteresis_loop import HysteresisLoop
-from config import Constants
+from .hysteresis_loop import HysteresisLoop
+from hdr.constants import Constants
 
 def plot_hysteresis(hysteresis: HysteresisLoop, title: str = "Hysteresis Loop", save_path: Optional[str] = None):
     """

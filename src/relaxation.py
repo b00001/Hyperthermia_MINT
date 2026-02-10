@@ -1,5 +1,5 @@
 import numpy as np
-from config import Constants
+from hdr.constants import Constants
 
 def neel_relaxation_time(tau0: float, K: float, V: float, T: float) -> float:
     """
