@@ -1,3 +1,5 @@
+channel=analysis_size # simulation, analysis_size, custom_analysis
+
 temperature=10.0   # Temperature [K]
 viscosity=0.00089   # Viscosity [Pa*s]
 dt=1e-10            # Time step [s]
