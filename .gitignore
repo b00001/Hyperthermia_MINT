@@ -1,0 +1,30 @@
+# OS files
+#.DS_Store
+#Thumbs.db
+
+## Editor / IDE
+#.vscode/
+#.idea/
+#*.swp
+
+# Python
+#__pycache__/
+#*.pyc
+#*.pyo
+#*.pyd
+#.env
+#.venv/
+#venv/
+
+# Logs
+#*.log
+
+# Build / output
+
+output/
+TEST/
+
+# Temporary files
+#*.tmp
+#*.bak
+
