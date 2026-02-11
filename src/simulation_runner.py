@@ -1,4 +1,4 @@
-from .config import SimulationConfig, parse_config_file
+from .config import SimulationConfig, parse_config_file, get_param
 from hdr.constants import Constants
 from .material import Material
 from .particle import Particle
@@ -20,18 +20,18 @@ def main():
     
     # 1. Load Configurations
     config_map = parse_config_file(config_file)
-    mat_map = parse_config_file("material_input.txt")
+    mat_map = parse_config_file(get_param(config_map, 'material', required=True) + ".txt")
     
     # Defaults if missing (safe fallback)
-    freq = config_map.get('field_frequency', 300e3)
+    freq = get_param(config_map, 'field_frequency', 300e3)
     # Field amplitude is now in mT (milliTesla) in input file
     # Convert to A/m: H [A/m] = B [T] / mu0
-    amp_mT = config_map.get('field_amplitude', 25.13)  # Default 25.13 mT
+    amp_mT = get_param(config_map, 'field_amplitude', 25.13)  # Default 25.13 mT
     amp = (amp_mT / 1000.0) / Constants.mu0  # Convert mT -> T -> A/m
-    cycles = config_map.get('cycles', 2)
-    dt = config_map.get('dt', 1e-10)
-    max_steps = int(config_map.get('max_steps', 0))  # 0 = auto
-    animation_fps = config_map.get('animation_fps', 20)
+    cycles = get_param(config_map, 'cycles', 1)
+    dt = get_param(config_map, 'dt', 1e-10)
+    max_steps = int(get_param(config_map, 'max_steps', 0))  # 0 = auto
+    animation_fps = get_param(config_map, 'animation_fps', 20)
     
     # Calculate tmax and override if max_steps is specified
     tmax = cycles / freq if freq > 0 else 1e-7
@@ -40,8 +40,8 @@ def main():
         print(f"Using max_steps={max_steps} (overriding cycles={cycles})")
     
     sim_config = SimulationConfig(
-        temperature=config_map.get('temperature', 300.0),
-        viscosity=config_map.get('viscosity', 0.00089),
+        temperature=get_param(config_map, 'temperature', 300.0),
+        viscosity=get_param(config_map, 'viscosity', 0.00089),
         dt=dt,
         tmax=tmax
     )
@@ -49,18 +49,18 @@ def main():
     # 2. Define Material and Particles
     # Construct material from map
     mat = Material(
-        Ms=mat_map.get('Ms', 4.46e5),
-        K=mat_map.get('K', 1e4),
-        alpha=mat_map.get('alpha', 0.1),
-        gamma=mat_map.get('gamma', 1.76e11)
+        Ms=get_param(mat_map, 'Ms', 4.46e5),
+        K=get_param(mat_map, 'K', 1e4),
+        alpha=get_param(mat_map, 'alpha', 0.1),
+        gamma=get_param(mat_map, 'gamma', 1.76e11)
     )
     # Density might be in map, inject into material object if we had a field for it or use default
     # Particle class uses getattr(material, 'density', 5200), so let's check
     if 'density' in mat_map:
         mat.density = mat_map['density']
     
-    p_diam = mat_map.get('particle_diameter', 20e-9)
-    p_count = int(mat_map.get('particle_count', 10))
+    p_diam = get_param(mat_map, 'particle_diameter', 20e-9)
+    p_count = int(get_param(mat_map, 'particle_count', 10))
     
     # Create an ensemble
     particles = [Particle(diameter=p_diam, material=mat) for _ in range(p_count)]
@@ -81,7 +81,7 @@ def main():
     times, H, M = hysteresis.get_arrays()
     area = hysteresis.calculate_area()
     # Need density for SAR... provided in mat_map
-    dens = mat_map.get('density', 5200)
+    dens = get_param(mat_map, 'density', 5200)
     sar = calculate_SAR(area, freq, density=dens)
     
     print("\n--- Results ---")
@@ -94,10 +94,10 @@ def main():
         print("WARNING: Loop area is zero. Check simulation parameters (e.g., field amplitude vs anisotropy).")
         
     # 7. Visualize (Optional based on input.txt)
-    save_output = config_map.get('save_output', True)
+    save_output = get_param(config_map, 'save_output', True)
     
     if save_output:
-        output_dir = config_map.get('output_dir', "output")
+        output_dir = get_param(config_map, 'output_dir', "output")
         os.makedirs(output_dir, exist_ok=True)
         print(f"\nSaving results to '{output_dir}' directory...")
         

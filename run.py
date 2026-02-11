@@ -4,12 +4,16 @@ Reads input.txt to determine execution channel.
 """
 import sys
 import os
-from src.config import parse_config_file
+import logging
+from src.config import parse_config_file, get_param
+
+# Configure logging so get_param warnings are visible
+logging.basicConfig(level=logging.WARNING, format="%(levelname)s - %(name)s - %(message)s")
 
 def main():
     # 1. Read input configuration
     config = parse_config_file("input.txt")
-    channel = config.get('channel', 'simulation')  # Default to simulation if not specified
+    channel = get_param(config, 'channel', 'simulation')  # Default to simulation if not specified
     
     print(f"Project Runner: Executing channel '{channel}'")
     

@@ -1,4 +1,28 @@
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+
+def get_param(config, key, default=None, required=False):
+    """
+    Retrieve a parameter from config dict with warning on default fallback.
+    
+    Args:
+        config: Dictionary of parsed config values.
+        key: Parameter key to look up.
+        default: Default value if key is missing.
+        required: If True, raise ValueError when key is missing.
+    
+    Returns:
+        The config value or default.
+    """
+    if key in config:
+        return config[key]
+    elif required:
+        raise ValueError(f"Required parameter '{key}' missing in input file.")
+    else:
+        logger.warning("Parameter '%s' missing. Using default: %s", key, default)
+        return default
 
 def parse_config_file(filepath: str) -> dict:
     """

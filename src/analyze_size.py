@@ -7,10 +7,8 @@ Generates plots:
 
 import numpy as np
 import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.pyplot as plt
 from .relaxation import neel_relaxation_time, brown_relaxation_time, effective_relaxation_time
-from .config import parse_config_file, SimulationConfig
+from .config import parse_config_file, get_param, SimulationConfig
 from hdr.constants import Constants
 from .material import Material
 from .particle import Particle
@@ -25,15 +23,15 @@ def analyze_relaxation_vs_size():
     mat_map = parse_config_file("material_input.txt")
     
     # Parameters
-    T = config_map.get('temperature', 300.0)
-    eta = config_map.get('viscosity', 0.00089)
-    K = mat_map.get('K', 1e4)
-    shell_thickness = config_map.get('shell_thickness', 2e-9)  # 2 nm default
+    T = get_param(config_map, 'temperature', 300.0)
+    eta = get_param(config_map, 'viscosity', 0.00089)
+    K = get_param(mat_map, 'K', 1e4)
+    shell_thickness = get_param(config_map, 'shell_thickness', 2e-9)  # 2 nm default
     
     # Size range
-    d_min = config_map.get('size_min', 2e-9)
-    d_max = config_map.get('size_max', 20e-9)
-    n_points = int(config_map.get('size_points', 50))
+    d_min = get_param(config_map, 'size_min', 2e-9)
+    d_max = get_param(config_map, 'size_max', 20e-9)
+    n_points = int(get_param(config_map, 'size_points', 50))
     
     diameters = np.linspace(d_min, d_max, n_points)
     radii_nm = (diameters / 2) * 1e9  # Convert to nm for plotting
@@ -84,27 +82,27 @@ def analyze_heating_vs_size():
     mat_map = parse_config_file("material_input.txt")
     
     # Parameters
-    T = config_map.get('temperature', 300.0)
-    eta = config_map.get('viscosity', 0.00089)
-    freq = config_map.get('field_frequency', 300e3)
-    amp_mT = config_map.get('field_amplitude', 25.13)
+    T = get_param(config_map, 'temperature', 300.0)
+    eta = get_param(config_map, 'viscosity', 0.00089)
+    freq = get_param(config_map, 'field_frequency', 300e3)
+    amp_mT = get_param(config_map, 'field_amplitude', 25.13)
     amp = (amp_mT / 1000.0) / Constants.mu0
-    dt = config_map.get('dt', 1e-10)
+    dt = get_param(config_map, 'dt', 1e-10)
     
     # Material
     mat = Material(
-        Ms=mat_map.get('Ms', 4.46e5),
-        K=mat_map.get('K', 1e4),
-        alpha=mat_map.get('alpha', 0.1),
-        gamma=mat_map.get('gamma', 1.76e11)
+        Ms=get_param(mat_map, 'Ms', 4.46e5),
+        K=get_param(mat_map, 'K', 1e4),
+        alpha=get_param(mat_map, 'alpha', 0.1),
+        gamma=get_param(mat_map, 'gamma', 1.76e11)
     )
     if 'density' in mat_map:
         mat.density = mat_map['density']
     
     # Size range
-    d_min = config_map.get('size_min', 2e-9)
-    d_max = config_map.get('size_max', 10e-9)
-    n_points = int(config_map.get('SAR_size_points', 8))  # Use SAR_size_points
+    d_min = get_param(config_map, 'size_min', 2e-9)
+    d_max = get_param(config_map, 'size_max', 10e-9)
+    n_points = int(get_param(config_map, 'SAR_size_points', 8))  # Use SAR_size_points
     
     diameters = np.linspace(d_min, d_max, n_points)
     radii_nm = (diameters / 2) * 1e9
@@ -136,7 +134,7 @@ def analyze_heating_vs_size():
         
         # Calculate SAR
         area = hysteresis.calculate_area()
-        sar = calculate_SAR(area, freq, density=mat_map.get('density', 5200))
+        sar = calculate_SAR(area, freq, density=get_param(mat_map, 'density', 5200))
         SAR_arr.append(sar)
         
         print(f" → SAR={sar:.2e} W/kg")
@@ -161,8 +159,8 @@ def run():
     
     # Load configuration to check what to analyze
     config_map = parse_config_file("input.txt")
-    do_relaxation = config_map.get('analyze_relaxation', True)
-    do_SAR = config_map.get('analyze_SAR', True)
+    do_relaxation = get_param(config_map, 'analyze_relaxation', True)
+    do_SAR = get_param(config_map, 'analyze_SAR', True)
     
     print("="*60)
     print("Particle Size Analysis")
