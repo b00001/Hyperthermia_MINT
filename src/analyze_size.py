@@ -27,7 +27,7 @@ def analyze_relaxation_vs_size():
     eta = get_param(config_map, 'viscosity', 0.00089)
     K = get_param(mat_map, 'K', 1e4)
     shell_thickness = get_param(config_map, 'shell_thickness', 2e-9)  # 2 nm default
-    
+    tau0 = get_param(mat_map, 'tau0', 1e-9)
     # Size range
     d_min = get_param(config_map, 'size_min', 2e-9)
     d_max = get_param(config_map, 'size_max', 20e-9)

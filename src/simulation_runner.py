@@ -10,7 +10,7 @@ import os
 
 import numpy as np
 
-def main():
+def run():
     print("Initializing Magnetic Hyperthermia Simulation from config files...")
     
     import sys
@@ -52,7 +52,8 @@ def main():
         Ms=get_param(mat_map, 'Ms', 4.46e5),
         K=get_param(mat_map, 'K', 1e4),
         alpha=get_param(mat_map, 'alpha', 0.1),
-        gamma=get_param(mat_map, 'gamma', 1.76e11)
+        gamma=get_param(mat_map, 'gamma', 1.76e11),
+        tau0=get_param(mat_map, 'tau0', 1e-9)
     )
     # Density might be in map, inject into material object if we had a field for it or use default
     # Particle class uses getattr(material, 'density', 5200), so let's check
@@ -118,4 +119,4 @@ def main():
         animate_system(sim.pos_history, sim.history, times, field=field, interval=anim_interval)
 
 if __name__ == "__main__":
-    main()
+    run()

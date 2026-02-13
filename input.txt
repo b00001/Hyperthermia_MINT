@@ -1,23 +1,33 @@
-channel=simulation # simulation, analysis_size, custom_analysis
-material=Fe2O3
+channel=susceptibility # simulation, analysis_size, custom_analysis, susceptibility
+material=Magnetite_Rosensweig  #Magnetite_Rosensweig
 
-temperature=10.0   # Temperature [K]
+temperature=300.0   # Temperature [K]
 viscosity=0.00089   # Viscosity [Pa*s]
 dt=1e-10            # Time step [s]
-field_amplitude=25.13 # B0 [mT]
+field_amplitude=60  # B0 [mT]
 field_frequency=400000 # f [Hz]
-#cycles=1            # Number of cycles to simulate
+cycles=1            # Number of cycles to simulate
 max_steps=0         # Maximum number of steps (0 = auto from cycles) (100,000 steps for 3 cycles)
 save_output=True    # Whether to save output files
 output_dir=output   # Directory name for output
 animation_fps=5    # Animation frame rate [frames/sec]
+particle_diameter=8.9e-9 # m (diameter = 2*R = 8.9 nm)
+shell_thickness=2e-9 # m
 
 
 # Particle size analysis
 analyze_relaxation=True  # Generate relaxation time vs size plot
 analyze_SAR=True        # Generate SAR vs size plot (slow!)
 size_min=1e-9            # Minimum particle diameter [m]
-size_max=10e-9           # Maximum particle diameter [m]
-size_points=50           # Number of points for relaxation plot
-SAR_size_points=10       # Number of points for SAR plot (fewer = faster)
-shell_thickness=2e-9
+size_max=30e-9           # Maximum particle diameter [m]
+size_points=30           # Number of points for relaxation plot
+SAR_size_points=300       # Number of points for SAR plot (fewer = faster)
+
+
+# Susceptibility analysis
+freq_min=0
+freq_max=3e6
+freq_points=5000
+freq_scale=linear
+polydisperse=True
+val_sigma=0.1

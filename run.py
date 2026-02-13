@@ -18,12 +18,16 @@ def main():
     print(f"Project Runner: Executing channel '{channel}'")
     
     if channel == 'simulation':
-        from src.simulation_runner import main as run_simulation
+        from src.simulation_runner import run as run_simulation
         run_simulation()
         
     elif channel == 'analysis_size':
         from src.analyze_size import run as run_analysis
         run_analysis()
+
+    elif channel == 'susceptibility':
+        from src.susceptibility import run as run_susceptibility
+        run_susceptibility()
         
     elif channel == 'custom_analysis':
         # Reserved for future custom loops
