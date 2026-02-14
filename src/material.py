@@ -15,6 +15,8 @@ class Material:
     K: float    
     alpha: float = 0.1
     gamma: float = 1.76e11  # Approx for electron in rad/(s*T)
+    tau0: float = 1e-9      # Pre-exponential factor for Neel relaxation [s]
+    density: float = 5180.0 # Material density [kg/m^3]
 
     @staticmethod
     def magnetite():
@@ -23,5 +25,6 @@ class Material:
             Ms=4.46e5,  # ~446 kA/m
             K=1.0e4,    # ~10-20 kJ/m^3
             alpha=0.1,
-            gamma=1.76e11
+            gamma=1.76e11,
+            tau0=1e-9,
         )

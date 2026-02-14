@@ -20,7 +20,7 @@ def analyze_relaxation_vs_size():
     """Generate relaxation time vs particle size plot."""
     # Load configuration
     config_map = parse_config_file("input.txt")
-    mat_map = parse_config_file("material_input.txt")
+    mat_map = parse_config_file(get_param(config_map, 'material') + '.txt')
     
     # Parameters
     T = get_param(config_map, 'temperature', 300.0)
@@ -48,7 +48,7 @@ def analyze_relaxation_vs_size():
         # Hydrodynamic volume (for Brownian)
         V_hydro = (1.0 + shell_thickness / (d/2))**3 * V_core
 
-        tau_N = neel_relaxation_time(1e-9, K, V_core, T)
+        tau_N = neel_relaxation_time(tau0, K, V_core, T)
         tau_B = brown_relaxation_time(eta, V_hydro, T)
         tau_eff = effective_relaxation_time(tau_N, tau_B)
 
@@ -79,7 +79,7 @@ def analyze_heating_vs_size():
     """Generate heating rate (SAR) vs particle size plot."""
     # Load configuration
     config_map = parse_config_file("input.txt")
-    mat_map = parse_config_file("material_input.txt")
+    mat_map = parse_config_file(get_param(config_map, 'material') + '.txt')
     
     # Parameters
     T = get_param(config_map, 'temperature', 300.0)
@@ -94,10 +94,10 @@ def analyze_heating_vs_size():
         Ms=get_param(mat_map, 'Ms', 4.46e5),
         K=get_param(mat_map, 'K', 1e4),
         alpha=get_param(mat_map, 'alpha', 0.1),
-        gamma=get_param(mat_map, 'gamma', 1.76e11)
+        gamma=get_param(mat_map, 'gamma', 1.76e11),
+        tau0=get_param(mat_map, 'tau0', 1e-9),
+        density=get_param(mat_map, 'density', 5180.0) * 1e-3
     )
-    if 'density' in mat_map:
-        mat.density = mat_map['density']
     
     # Size range
     d_min = get_param(config_map, 'size_min', 2e-9)
@@ -137,7 +137,7 @@ def analyze_heating_vs_size():
         sar = calculate_SAR(area, freq, density=get_param(mat_map, 'density', 5200))
         SAR_arr.append(sar)
         
-        print(f" → SAR={sar:.2e} W/kg")
+        print(f" -> SAR={sar:.2e} W/kg")
     
     # Plot
     plt.figure(figsize=(8, 6))
@@ -156,7 +156,6 @@ def analyze_heating_vs_size():
 def run():
     import os
     os.makedirs('output', exist_ok=True)
-    
     # Load configuration to check what to analyze
     config_map = parse_config_file("input.txt")
     do_relaxation = get_param(config_map, 'analyze_relaxation', True)

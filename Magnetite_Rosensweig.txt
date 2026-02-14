@@ -1,4 +1,4 @@
 Ms=4.46e5           # A/m (saturation magnetization of bulk magnetite)
 K=7.8e4             # J/m^3 (anisotropy constant)
-particle_diameter=8.9e-9 # m (2 * R = 8.9 nm)
 tau0=1e-9           # s
+density=5180.0      # Density [kg/m^3]

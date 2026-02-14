@@ -53,12 +53,9 @@ def run():
         K=get_param(mat_map, 'K', 1e4),
         alpha=get_param(mat_map, 'alpha', 0.1),
         gamma=get_param(mat_map, 'gamma', 1.76e11),
-        tau0=get_param(mat_map, 'tau0', 1e-9)
+        tau0=get_param(mat_map, 'tau0', 1e-9),
+        density=get_param(mat_map, 'density', 5180.0)
     )
-    # Density might be in map, inject into material object if we had a field for it or use default
-    # Particle class uses getattr(material, 'density', 5200), so let's check
-    if 'density' in mat_map:
-        mat.density = mat_map['density']
     
     p_diam = get_param(mat_map, 'particle_diameter', 20e-9)
     p_count = int(get_param(mat_map, 'particle_count', 10))

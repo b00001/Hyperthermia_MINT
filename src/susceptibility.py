@@ -84,6 +84,14 @@ def calculate_power_dissipation(chi_double_prime, H0, f_sweep):
     mu0 = Constants.mu0
     return mu0 * np.pi * chi_double_prime * H0**2 * f_sweep
 
+def calculate_power_dissipation_rosensweig(chi_double_prime, H0, f_sweep):
+    """
+    Volumetric power dissipation (Rosensweig Eq. 6).
+    P = mu0 * pi * chi'' * H0^2 * f   [W/m^3]
+    """
+    mu0 = Constants.mu0
+    return mu0 * np.pi * chi_double_prime * H0**2 * f_sweep
+
 
 def calculate_SAR(P, density):
     """
