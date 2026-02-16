@@ -1,0 +1,7 @@
+Ms=425e3           # Saturation magnetization [A/m]
+K=180e3             # Anisotropy constant [J/m^3]
+alpha=0.05           # Damping parameter
+gamma=1.76e11       # Gyromagnetic ratio [rad/(s*T)]
+density=4907        # Density [kg/m^3]
+particle_count=1   # Number of particles
+tau0=1e-9           # s
