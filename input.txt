@@ -1,17 +1,18 @@
-channel=susceptibility # simulation, analysis_size, custom_analysis, susceptibility
-material=FeO_Fe2O3  #Magnetite_Rosensweig, FeO_Fe2O3
+channel=analysis_size # simulation, analysis_size, custom_analysis, susceptibility
+material=Magnetite_Rosensweig  #Magnetite_Rosensweig, FeO_Fe2O3
 
 temperature=300.0   # Temperature [K]
 viscosity=0.00089   # Viscosity [Pa*s]
-dt=1e-10            # Time step [s]
-field_amplitude=60  # B0 [mT]
-field_frequency=300000 # f [Hz]
+dt=1e-13            # Time step [s]
+field_amplitude=10  # B0 [mT]
+field_frequency=100000 # f [Hz]
 cycles=1            # Number of cycles to simulate
 max_steps=0         # Maximum number of steps (0 = auto from cycles) (100,000 steps for 3 cycles)
 save_output=True    # Whether to save output files
 output_dir=output   # Directory name for output
 animation_fps=5    # Animation frame rate [frames/sec]
-particle_diameter=8.9e-9 # m (diameter = 2*R = 8.9 nm)
+particle_diameter=16e-9 # m (diameter = 2*R = 8.9 nm)
+particle_count=10   # Number of particles
 shell_thickness=2e-9 # m
 
 

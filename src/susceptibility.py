@@ -84,13 +84,13 @@ def calculate_power_dissipation(chi_double_prime, H0, f_sweep):
     mu0 = Constants.mu0
     return mu0 * np.pi * chi_double_prime * H0**2 * f_sweep
 
-def calculate_power_dissipation_rosensweig(chi_double_prime, H0, f_sweep):
+def calculate_power_dissipation_tua(x0, tau_eff, H0, f_sweep):
     """
-    Volumetric power dissipation (Rosensweig Eq. 6).
+    Volumetric power dissipation (Tua Eq. 6).
     P = mu0 * pi * chi'' * H0^2 * f   [W/m^3]
     """
     mu0 = Constants.mu0
-    return mu0 * np.pi * chi_double_prime * H0**2 * f_sweep
+    return (mu0 * np.pi * x0 * H0**2 * f_sweep * (2 * np.pi * f_sweep) * tau_eff) / (1 + (2 * np.pi * f_sweep * tau_eff)**2)
 
 
 def calculate_SAR(P, density):
@@ -139,6 +139,7 @@ def calculate_SAR_vs_diameter(d_array, f, T, viscosity, tau0, shell, Ms, K, H0, 
         chi_dp = (x0 * omega * tau_eff) / denom
         
         P = mu0 * np.pi * chi_dp * H0**2 * f
+        P = calculate_power_dissipation_tua(x0, tau_eff, H0, f)
         SAR_array[i] = P / density
     
     return SAR_array

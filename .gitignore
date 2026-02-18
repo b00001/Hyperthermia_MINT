@@ -23,6 +23,7 @@
 
 output/
 TEST/
+TEST_TASK/
 
 # Temporary files
 #*.tmp

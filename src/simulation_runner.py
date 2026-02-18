@@ -56,9 +56,8 @@ def run():
         tau0=get_param(mat_map, 'tau0', 1e-9),
         density=get_param(mat_map, 'density', 5180.0)
     )
-    
-    p_diam = get_param(mat_map, 'particle_diameter', 20e-9)
-    p_count = int(get_param(mat_map, 'particle_count', 10))
+    p_diam = get_param(config_map, 'particle_diameter', 20e-9)
+    p_count = int(get_param(config_map, 'particle_count', 10))
     
     # Create an ensemble
     particles = [Particle(diameter=p_diam, material=mat) for _ in range(p_count)]
